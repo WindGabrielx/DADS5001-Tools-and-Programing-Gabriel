@@ -55,7 +55,7 @@ from transformers import pipeline
 
 @st.cache_resource
 def load_model():
-    return pipeline("text-classification", model = "Flu")
+    return pipeline("text-classification", model = "tabularisai/multilingual-sentiment-analysis")
 
 model = load_model()
 query = st.text_input("Your query", value="I love Streamlit!")
