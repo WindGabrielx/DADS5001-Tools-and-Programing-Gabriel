@@ -38,3 +38,27 @@ hour_to_filter = st.sidebar.slider('hour', 0, 23, 17)
 filtered_data = data[data[DATE_COLUMN].dt.hour == hour_to_filter]
 st.subheader(f'Map of all pickups at {hour_to_filter}:00')
 st.map(filtered_data)
+
+st.subheader('Rest API')
+import requests
+
+@st.cache_data
+def api_call():
+    response = requests.get('https://jsonplaceholder.typicode.com/posts/1')
+    return response.json()
+ans = api_call()
+st.write(ans)
+
+st.subheader('Transformers')
+import streamlit as st
+from transformers import pipeline
+
+@st.cache_resource
+def load_model():
+    return pipeline("text-classification", model = "tabularisai/multilingual-sentiment-analysis")
+
+model = load_model()
+query = st.text_input("Your query", value="I love Streamlit!")
+if query:
+    result = model(query)[0]
+    st.write(result)
